@@ -1,5 +1,5 @@
 server:
-  port: 8617
+  port: 8618
 spring:
   application:
     name: eureka-consumer-zuul
