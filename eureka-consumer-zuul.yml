@@ -1,0 +1,50 @@
+server:
+  port: 8617
+spring:
+  application:
+    name: eureka-consumer-zuul
+  security:
+    user:
+      name: user
+      password: 123
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8610/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+management:
+  endpoint:
+    env:
+      post:
+        enabled: true
+    health:
+      show-details: always  #默认是never
+  endpoints:
+    web:
+      exposure:
+        include: "*"      #暴露所有端点 默认是info和health
+zuul:
+  host:
+    connect-timeout-millis: 20000
+    socket-timeout-millis: 60000
+  add-proxy-headers: true
+  routes:
+    consumer-apiname:
+      serviceId: eureka-consumer-feign
+      path: /consumer-api/**
+    baidu:
+      path: /baidu/**
+      url: http://www.163.com
+  prefix: v1
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000 #设置Ribbon连接超时时间
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000  #设置Hystrix超时时间
