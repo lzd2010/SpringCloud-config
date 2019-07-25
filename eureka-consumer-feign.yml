@@ -1,0 +1,45 @@
+server:
+  port: 8612
+spring:
+  application:
+    name: eureka-consumer-feign
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8610/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+ribbon: #�޸�Ĭ�Ͽͻ��˵��ó�ʱʱ��
+  ConnectTimeout: 5000
+  ReadTimeout: 5000
+feign:
+  compression:
+    request:
+      enabled: true
+      mime-types: text/xml,application/xml,application/json  #����ѹ��֧�ֵ�MIME TYPE
+      min-request-size: 2048
+    response:
+      enabled: true #������ӦGZIPѹ��
+  httpclient:
+    enabled: true
+  hystrix:
+    enabled: true  #开启熔断
+management:
+  endpoint:
+    env:
+      post:
+        enabled: true
+    health:
+      show-details: always  #默认是never
+  endpoints:
+    web:
+      exposure:
+        include: "*"      #暴露所有端点 默认是info和health
+hystrix:
+  commond:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 2000
