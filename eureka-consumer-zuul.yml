@@ -34,8 +34,8 @@ zuul:
       serviceId: eureka-consumer-feign
       path: /consumer-api/**
     baidu:
-      path: /sina/**
-      url: http://www.sina.com
+      path: /baidu/**
+      url: http://www.baidu.com
 ribbon:
   ReadTimeout: 60000
   ConnectTimeout: 60000 #设置Ribbon连接超时时间
